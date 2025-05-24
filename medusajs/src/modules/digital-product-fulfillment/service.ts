@@ -1,17 +1,11 @@
-import { AbstractFulfillmentProviderService } from "@medusajs/framework/utils";
-import {
-  CreateFulfillmentResult,
-  FulfillmentDTO,
-  FulfillmentItemDTO,
-  FulfillmentOption,
-  FulfillmentOrderDTO,
-} from "@medusajs/framework/types";
+import { AbstractFulfillmentProviderService } from "@medusajs/framework/utils"
+import { CreateFulfillmentResult, FulfillmentDTO, FulfillmentItemDTO, FulfillmentOption, FulfillmentOrderDTO } from "@medusajs/framework/types"
 
 class DigitalProductFulfillmentService extends AbstractFulfillmentProviderService {
-  static identifier = "digital";
+  static identifier = "digital"
 
   constructor() {
-    super();
+    super()
   }
 
   async getFulfillmentOptions(): Promise<FulfillmentOption[]> {
@@ -19,7 +13,7 @@ class DigitalProductFulfillmentService extends AbstractFulfillmentProviderServic
       {
         id: "digital-fulfillment",
       },
-    ];
+    ]
   }
 
   async validateFulfillmentData(
@@ -27,33 +21,33 @@ class DigitalProductFulfillmentService extends AbstractFulfillmentProviderServic
     data: Record<string, unknown>,
     context: Record<string, unknown>
   ): Promise<any> {
-    return data;
+    return data
   }
 
   async validateOption(data: Record<string, any>): Promise<boolean> {
-    return true;
+    return true
   }
 
   async createFulfillment(
-    data: Record<string, unknown>,
-    items: Partial<Omit<FulfillmentItemDTO, "fulfillment">>[],
-    order: Partial<FulfillmentOrderDTO> | undefined,
+    data: Record<string, unknown>, 
+    items: Partial<Omit<FulfillmentItemDTO, "fulfillment">>[], 
+    order: Partial<FulfillmentOrderDTO> | undefined, 
     fulfillment: Partial<Omit<FulfillmentDTO, "provider_id" | "data" | "items">>
   ): Promise<CreateFulfillmentResult> {
     // No data is being sent anywhere
     return {
       data,
-      labels: [],
-    };
+      labels: []
+    }
   }
 
   async cancelFulfillment(): Promise<any> {
-    return {};
+    return {}
   }
 
   async createReturnFulfillment(): Promise<any> {
-    return {};
+    return {}
   }
 }
 
-export default DigitalProductFulfillmentService;
+export default DigitalProductFulfillmentService

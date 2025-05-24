@@ -1,18 +1,18 @@
-import {
-  AuthenticatedMedusaRequest,
+import { 
+  AuthenticatedMedusaRequest, 
   MedusaResponse,
-} from "@medusajs/framework/http";
-import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
+} from "@medusajs/framework"
+import { 
+  ContainerRegistrationKeys,
+} from "@medusajs/framework/utils"
 
 export const GET = async (
   req: AuthenticatedMedusaRequest,
   res: MedusaResponse
 ) => {
-  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY);
+  const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 
-  const {
-    data: [customer],
-  } = await query.graph({
+  const { data: [customer] } = await query.graph({
     entity: "customer",
     fields: [
       "orders.digital_product_order.products.*",
@@ -21,17 +21,17 @@ export const GET = async (
     filters: {
       id: req.auth_context.actor_id,
     },
-  });
+  })
 
-  const digitalProducts = {};
+  const digitalProducts = {}
 
-  //   customer.orders.forEach((order) => {
-  //     order.digital_product_order.products.forEach((product) => {
-  //       digitalProducts[product.id] = product;
-  //     });
-  //   });
+  customer.orders.forEach((order) => {
+    order.digital_product_order.products.forEach((product) => {
+      digitalProducts[product.id] = product
+    })
+  })
 
   res.json({
     digital_products: Object.values(digitalProducts),
-  });
-};
+  })
+}
