@@ -1,19 +1,20 @@
-import { model } from "@medusajs/framework/utils"
-import DigitalProductMedia from "./digital-product-media"
-import DigitalProductOrder from "./digital-product-order"
+import { model } from "@medusajs/framework/utils";
+import DigitalProductMedia from "./digital-product-media";
+import DigitalProductOrder from "./digital-product-order";
 
-const DigitalProduct = model.define("digital_product", {
-  id: model.id().primaryKey(),
-  name: model.text(),
-  medias: model.hasMany(() => DigitalProductMedia, {
-    mappedBy: "digitalProduct"
-  }),
-  orders: model.manyToMany(() => DigitalProductOrder, {
-    mappedBy: "products"
+const DigitalProduct = model
+  .define("digital_product", {
+    id: model.id().primaryKey(),
+    name: model.text(),
+    medias: model.hasMany(() => DigitalProductMedia, {
+      mappedBy: "digitalProduct",
+    }),
+    orders: model.manyToMany(() => DigitalProductOrder, {
+      mappedBy: "products",
+    }),
   })
-})
-.cascades({
-  delete: ["medias"]
-})
+  .cascades({
+    delete: ["medias"],
+  });
 
-export default DigitalProduct
+export default DigitalProduct;
