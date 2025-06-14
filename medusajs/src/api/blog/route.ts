@@ -2,8 +2,6 @@ import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
 import { createPostWorkflow } from "src/workflows/blog";
 import { z } from "zod";
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils";
-import { BLOG_MODULE } from "src/modules/Blog";
-import BlogModuleService from "src/modules/Blog/service";
 
 const createPostSchema = z.object({
   name: z.string(),

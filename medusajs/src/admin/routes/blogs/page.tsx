@@ -7,7 +7,7 @@ import {
   Drawer,
   Toaster,
 } from "@medusajs/ui";
-import { Trash } from "@medusajs/icons";
+import { Book, Trash } from "@medusajs/icons";
 import { useEffect, useMemo, useState } from "react";
 
 type Blog = {
@@ -34,7 +34,7 @@ const CreateBlogForm = ({ onSuccess }: { onSuccess: () => void }) => {
     };
 
     try {
-      const response = await fetch("/blog/posts", {
+      const response = await fetch("/blog", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -91,8 +91,8 @@ const CreateBlogForm = ({ onSuccess }: { onSuccess: () => void }) => {
 const BlogsPage = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [open, setOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); // 1-based to match route.ts
-  const pageLimit = 10; // Match route.ts default limit
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageLimit = 10;
   const [count, setCount] = useState(0);
 
   const pagesCount = useMemo(() => Math.ceil(count / pageLimit), [count]);
@@ -108,7 +108,7 @@ const BlogsPage = () => {
       page: `${currentPage}`,
     });
 
-    fetch(`/blog/posts?${query.toString()}`, { credentials: "include" })
+    fetch(`/blog?${query.toString()}`, { credentials: "include" })
       .then((res) => res.json())
       .then(({ posts, total }) => {
         setBlogs(posts);
@@ -120,12 +120,12 @@ const BlogsPage = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const response = await fetch(`/blog/posts/${id}`, {
+      const response = await fetch(`/blog/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
       if (!response.ok) throw new Error("Failed to delete blog");
-      fetchBlogs(); // Refetch after delete
+      fetchBlogs();
     } catch (error) {
       console.error("Error deleting blog:", error);
     }
@@ -204,7 +204,7 @@ const BlogsPage = () => {
       <Table.Pagination
         count={count}
         pageSize={pageLimit}
-        pageIndex={currentPage - 1} // Adjust for 0-based indexing in UI
+        pageIndex={currentPage - 1}
         pageCount={pagesCount}
         canPreviousPage={canPreviousPage}
         canNextPage={canNextPage}
@@ -217,7 +217,7 @@ const BlogsPage = () => {
 
 export const config = defineRouteConfig({
   label: "Blogs",
-  icon: Trash,
+  icon: Book,
 });
 
 export default BlogsPage;
