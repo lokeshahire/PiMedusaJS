@@ -21,6 +21,9 @@ module.exports = defineConfig({
       resolve: "./src/modules/digital-product",
     },
     {
+      resolve: "./src/modules/blog",
+    },
+    {
       resolve: "@medusajs/fulfillment",
       options: {
         providers: [
